@@ -6,6 +6,28 @@ app.directive('lanzWelcome', function () {
     templateUrl: '../lanz-welcome/lanz-welcome.html'
   };
 });
+app.filter('deaths', function(){
+  return function(input){
+    if(input == undefined){
+      return 0;
+    }else{
+      return input;
+    }
+  }
+});
+app.filter('gametype', function(){
+  return function(input){
+    if(input == 'RANKED_SOLO_5x5'){
+      return 'SoloQ';
+    }else if(input == 'ARAM_UNRANKED_5x5'){
+      return 'ARAM';
+    }else if(input == 'NORMAL'){
+      return 'Normal';
+    }else if(input == 'NONE'){
+      return 'Custom';
+    }
+  }
+});
 
 app.controller('LanzCtrl', function($scope, $http){
   $scope.api_key = '662f5bb2-350f-4b2d-b6fc-038e17b04827';
@@ -37,10 +59,21 @@ app.controller('LanzCtrl', function($scope, $http){
         var query = $scope.request_prefix +'game/by-summoner/'+ $scope.summonerId +'/recent'+ $scope.request_suffix;
         $http.get(query).success(function(data){
           $scope.recent_games = data.games;
-          console.log($scope.recent_games);
           for(var i=0;i<$scope.recent_games.length;i++){
-            console.log($scope.recent_games[i].stats.numDeaths);
           }
+          $scope.request_version = 'v1.3';
+          $scope.request_prefix = 'https://'+ $scope.region +'.api.pvp.net/api/lol/'+ $scope.region +'/'+ $scope.request_version +'/';
+          var query = $scope.request_prefix +'stats/by-summoner/'+ $scope.summonerId +'/summary?season=SEASON4'+'&api_key='+ $scope.api_key;
+          $http.get(query).success(function(data){
+            $scope.game_mode_stats = data.playerStatSummaries;
+            console.log($scope.game_mode_stats);
+            for(var i=0;i<$scope.game_mode_stats.length;i++){
+              if($scope.game_mode_stats[i].playerStatSummaryType == 'Unranked'){
+                $scope.normal_stats = $scope.game_mode_stats[i];
+                console.log($scope.normal_stats);
+              }
+            }
+          });
         });
       });
     });
@@ -48,6 +81,5 @@ app.controller('LanzCtrl', function($scope, $http){
       $scope.summoner_name = $scope.summoner_name.toLowerCase().replace(/\s+/g,'');
     });
   };
-
 
 });

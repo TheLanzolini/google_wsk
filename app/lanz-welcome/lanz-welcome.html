@@ -52,11 +52,35 @@
       <tr ng-repeat="recent_game in recent_games" ng-class="{'win':recent_game.stats.win, 'loss':!recent_game.stats.win}">
         <td> {{recent_game.championId}} </td>
         <td> {{recent_game.gameMode}} </td>
-        <td> {{recent_game.subType}} </td>
+        <td> {{recent_game.subType | gametype}} </td>
         <td> {{recent_game.stats.championsKilled}} </td>
-        <td> {{recent_game.stats.numDeaths}} </td>
+        <td> {{recent_game.stats.numDeaths | deaths}} </td>
         <td> {{recent_game.stats.assists}} </td>
+      </tr>
+    </table>
+    <h2>NORMAL GAME STATS</h2>
+    <table>
+      <tr>
+        <th>Wins</th>
+        <th>Total Minions</th>
+        <th>Total Kills</th>
+        <th>Total Assists</th>
+        <th>Total Turrets</th>
+      </tr>
+      <tr>
+        <td> {{normal_stats.wins}} </td>
+        <td> {{normal_stats.aggregatedStats.totalMinionKills + normal_stats.aggregatedStats.totalNeutralMinionsKilled}} </td>
+        <td> {{normal_stats.aggregatedStats.totalChampionKills}} </td>
+        <td> {{normal_stats.aggregatedStats.totalAssists}} </td>
+        <td> {{normal_stats.aggregatedStats.totalTurretsKilled}} </td>
       </tr>
     </table>
   </div>
 </div>
+
+
+
+
+
+
+
