@@ -1,0 +1,62 @@
+<div class="lanz-wrapper">
+  <h1>Welcome to Lanzular</h1>
+  <h4>May I take your hat, Sir?</h4>
+  <hr />
+  <div class="results-wrapper" ng-controller="LanzCtrl as lanz">
+    <input type="text" ng-model="summoner_name" size="80" placeholder="Summoner Name" ng-trim="false"  />
+    <button ng-click="getSummoner()">CLICK ME</button>
+    <h2>GENERAL INFO</h2>
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Icon</th>
+        <th>Level</th>
+        <th>Revision Date</th>
+      </tr>
+      <tr>
+        <td> {{summoner[summoner_name].id}} </td>
+        <td> {{summoner[summoner_name].name}} </td>
+        <td> {{summoner[summoner_name].profileIconId}} </td>
+        <td> {{summoner[summoner_name].summonerLevel}} </td>
+        <td> {{summoner[summoner_name].revisionDate | date:'MM/dd/yyyy @ h:mma'}} </td>
+      </tr>
+    </table>
+    <h2>LEAGUE INFO</h2>
+    <table>
+      <tr>
+        <th> Name </th>
+        <th> Tier </th>
+        <th> Rank </th>
+        <th> Points </th>
+        <th> Wins </th>
+      </tr>
+      <tr>
+        <td> {{solo_queue.name}} </td>
+        <td> {{solo_queue.tier}} </td>
+        <td> {{league_position.division}} </td>
+        <td> {{league_position.leaguePoints}} </td>
+        <td> {{league_position.wins}} </td>
+      </tr>
+    </table>
+    <h2>RECENT GAMES</h2>
+    <table>
+      <tr>
+        <th>Champion</th>
+        <th>Mode</th>
+        <th>Type</th>
+        <th>Kills</th>
+        <th>Deaths</th>
+        <th>Assists</th>
+      </tr>
+      <tr ng-repeat="recent_game in recent_games" ng-class="{'win':recent_game.stats.win, 'loss':!recent_game.stats.win}">
+        <td> {{recent_game.championId}} </td>
+        <td> {{recent_game.gameMode}} </td>
+        <td> {{recent_game.subType}} </td>
+        <td> {{recent_game.stats.championsKilled}} </td>
+        <td> {{recent_game.stats.numDeaths}} </td>
+        <td> {{recent_game.stats.assists}} </td>
+      </tr>
+    </table>
+  </div>
+</div>
