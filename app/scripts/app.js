@@ -21,6 +21,8 @@ app.filter('gametype', function(){
       return 'SoloQ';
     }else if(input == 'ARAM_UNRANKED_5x5'){
       return 'ARAM';
+    }else if(input == 'RANKED_TEAM_5x5'){
+      return 'Ranked Team';
     }else if(input == 'NORMAL'){
       return 'Normal';
     }else if(input == 'NONE'){
@@ -65,12 +67,10 @@ app.controller('LanzCtrl', function($scope, $http){
           $scope.request_prefix = 'https://'+ $scope.region +'.api.pvp.net/api/lol/'+ $scope.region +'/'+ $scope.request_version +'/';
           var query = $scope.request_prefix +'stats/by-summoner/'+ $scope.summonerId +'/summary?season=SEASON4'+'&api_key='+ $scope.api_key;
           $http.get(query).success(function(data){
-            $scope.game_mode_stats = data.playerStatSummaries;
-            console.log($scope.game_mode_stats);
+            $scope.game_mode_stats = data.playerStatSummaries;    
             for(var i=0;i<$scope.game_mode_stats.length;i++){
               if($scope.game_mode_stats[i].playerStatSummaryType == 'Unranked'){
                 $scope.normal_stats = $scope.game_mode_stats[i];
-                console.log($scope.normal_stats);
               }
             }
           });
