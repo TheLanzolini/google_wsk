@@ -53,9 +53,10 @@
     </nav>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="../scripts/game.js"></script>
-    <main ng-view>
-      <game-directive columns="7" rows="5"></game-directive>
+    <main ng-view ng-controller="gameController as game">
+      <canvas id="canvas" width="750" height="500" style="display: block; margin: 10px auto;"></canvas>
     </main>
 
     <!-- build:js scripts/main.min.js -->
